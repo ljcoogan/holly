@@ -133,7 +133,7 @@ function hasPronounsRole(member: GuildMember, pronouns: string[]) {
 }
 
 async function hasPostedIntroduction(member: GuildMember, channel: TextChannel) {
-  const messages = await channel.messages.fetch({ limit: 200 });
+  const messages = await channel.messages.fetch({ limit: 100 });
   const introductionMessage = messages.find((message: Message) => message.author.id === member.id);
   if (introductionMessage) return true;
   return false;
