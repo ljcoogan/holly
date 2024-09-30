@@ -1,0 +1,26 @@
+{
+  "name": "holly",
+  "version": "0.0.1",
+  "description": "A Discord bot for DU Science Fiction & Fantasy Society",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "biome": "biome check --write ./src/**",
+    "build": "rm -r ./dist && tsc",
+    "start": "node --env-file=./secrets/.env ./dist/index.js",
+    "dev": "npm run biome && npm run build && npm run start"
+  },
+  "author": "Liam Coogan",
+  "license": "AGPL-3.0-only",
+  "dependencies": {
+    "@google-cloud/local-auth": "^3.0.1",
+    "discord.js": "^14.16.1",
+    "googleapis": "^144.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "@types/node": "^22.5.4",
+    "globals": "^15.9.0",
+    "typescript": "^5.6.2"
+  }
+}
