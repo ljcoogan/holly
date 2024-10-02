@@ -1,7 +1,4 @@
-import {
-  type ChatInputCommandInteraction,
-  SlashCommandBuilder,
-} from "discord.js";
+import { type ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 const QUOTES = [
   "It is possible to commit no mistakes and still lose. That is not weakness, that is life.",
