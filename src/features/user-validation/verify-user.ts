@@ -80,7 +80,7 @@ To access the rest of the server, follow the instructions in the <#${channel.id}
     if (!emails.includes(providedEmail)) {
       message.reply(
         `Sorry, that's not an email address on our sign-up list. 
--Your message should contain an email address, e.g. 'jcrowley@tcd.ie', and nothing else. 
+- Your message should contain an email address, e.g. 'jcrowley@tcd.ie', and nothing else. 
 - If you haven't signed up yet, you can do so here: https://trinitysocietieshub.com/products/science-fiction-and-fantasy-society.
 - If you joined today, the signup list might not have updated yet, so you should wait a few hours and try again.
       `,
