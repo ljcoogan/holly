@@ -1,7 +1,6 @@
 import type {
   ChatInputCommandInteraction,
   Client,
-  Collection,
   SlashCommandBuilder,
 } from "discord.js";
 
@@ -13,7 +12,7 @@ export interface Command {
 
 // Extension of the 'Client' object that allows for storing slash commands in a 'commands' property
 export interface ClientWithCommands extends Client {
-  commands?: Collection<string, Command>;
+  commands?: Map<string, Command>;
 }
 
 // Object stored in secrets/verified-users.json

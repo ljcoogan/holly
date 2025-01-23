@@ -8,7 +8,12 @@ const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
 const TOKEN_PATH = join(process.cwd(), "secrets/google-token.json");
 const CREDENTIALS_PATH = join(process.cwd(), "secrets/google-credentials.json");
 
-// Connect to Google Sheets and pull emails.
+/**
+ * Retrieve email addresses from the Google Sheet, provided the Sheet ID and range are correct,
+ * and secrets/google-token.json and secrets/google-credentials.json exist
+ *
+ * @returns {string[]} - List of emails from the Google Sheet
+ */
 export async function getEmails(): Promise<string[]> {
   const client = await authorize();
 
@@ -27,14 +32,19 @@ export async function getEmails(): Promise<string[]> {
   return emails;
 }
 
-// Authenticate with Google client.
+/**
+ * Use secrets/google-token.json and secrets/google-credentials.json to authenticate with Google,
+ * so we can read the spreadsheet
+ *
+ * @returns {OAuth2Client} - Authenticated client for interacting with Google Sheets
+ */
 async function authorize(): Promise<OAuth2Client> {
-  // Attempt to read credentials from token.json.
+  // Attempt to read credentials from token.json
   try {
     const credentials = await JSON.parse(readFileSync(TOKEN_PATH).toString());
     const authCredentials = google.auth.fromJSON(credentials);
     return authCredentials as OAuth2Client;
-    // If this fails, create new token.json.
+    // If this fails, create new token.json
   } catch (_) {
     const client = await authenticate({
       scopes: SCOPES,

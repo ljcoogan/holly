@@ -1,4 +1,7 @@
-import { type ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import {
+  type ChatInputCommandInteraction,
+  SlashCommandBuilder,
+} from "discord.js";
 
 const QUOTES = [
   "It is possible to commit no mistakes and still lose. That is not weakness, that is life.",
@@ -21,7 +24,9 @@ const QUOTES = [
 ];
 
 export default {
-  data: new SlashCommandBuilder().setName("picard").setDescription("Make it so."),
+  data: new SlashCommandBuilder()
+    .setName("picard")
+    .setDescription("Make it so."),
   async execute(interaction: ChatInputCommandInteraction) {
     const result = Math.floor(Math.random() * QUOTES.length);
     interaction.reply(`> ${QUOTES[result]}

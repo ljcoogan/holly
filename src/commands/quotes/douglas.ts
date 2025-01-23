@@ -27,16 +27,12 @@ const QUOTES = [
 ];
 
 export default {
-  data: new SlashCommandBuilder().setName("douglas").setDescription("Forty two."),
+  data: new SlashCommandBuilder()
+    .setName("douglas")
+    .setDescription("Forty two."),
   async execute(interaction: ChatInputCommandInteraction) {
-    if ((interaction.member.roles as GuildMemberRoleManager).cache.has(process.env.HATED_ROLE_ID)) {
-      interaction.reply(
-        "You just got banana mellowed! https://www.youtube.com/watch?v=mZjVCHEeSrQ",
-      );
-    } else {
-      const result = Math.floor(Math.random() * QUOTES.length);
-      interaction.reply(`> ${QUOTES[result]}
+    const result = Math.floor(Math.random() * QUOTES.length);
+    interaction.reply(`> ${QUOTES[result]}
 \\- *Douglas Adams*`);
-    }
   },
 };
