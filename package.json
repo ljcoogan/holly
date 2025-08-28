@@ -1,7 +1,6 @@
 {
   "name": "holly",
-  "version": "0.0.1",
-  "description": "A Discord bot for DU Science Fiction & Fantasy Society",
+  "description": "A Discord bot for student societies",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
@@ -13,12 +12,12 @@
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@google-cloud/local-auth": "^3.0.1",
-    "discord.js": "^14.16.1",
+    "discord.js": "^14.22.1",
     "googleapis": "^144.0.0"
   },
   "devDependencies": {
-    "@types/node": "^22.5.4",
-    "globals": "^15.9.0",
-    "typescript": "^5.6.2"
+    "@types/node": "^22.18.0",
+    "globals": "^15.15.0",
+    "typescript": "^5.9.2"
   }
 }
