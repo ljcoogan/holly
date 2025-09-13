@@ -45,17 +45,26 @@ export default async function startVerification(member: GuildMember) {
   await (welcomeChannel as TextChannel)
     .send(`## Welcome <@${member.user.id}> to the Discord server! :partying_face:
 To access the rest of the server, follow the instructions in the <#${tempChannel.id}> channel.
-	`);
+    `);
 
   // In temporary channel, instruct user how to verify their membership
   await tempChannel.send(`## Society Membership Verification
 <@${member.user.id}>, to access the rest of the server, please follow these steps in order:
-1. Agree to the **server rules**. Discord should be prompting you to do this right now.
-2. Choose your **pronouns** in the <#${process.env.ROLES_CHANNEL_ID}> channel.
-3. Change your server **nickname** to your name. You can do this by clicking the drop-down menu at the top left of this server, and choosing *Edit Server Profile*.
-4. **Introduce yourself** in the <#${process.env.WELCOME_CHANNEL_ID}> channel! What do you study? What parts of the society interest you?
-5. Finally, please enter your **TCD email** in this chat and I'll check if you're on the membership list!
+1. Choose your **pronouns** in the <#${process.env.ROLES_CHANNEL_ID}> channel.
+2. Change your server **nickname** to your name. You can do this by clicking the drop-down menu at the top left of this server, and choosing *Edit Server Profile*.
+3. **Introduce yourself** in the <#${process.env.WELCOME_CHANNEL_ID}> channel! What do you study? What parts of the society interest you?
+4. Finally, please enter your **TCD email** in this chat and I'll check if you're on the membership list!
   `);
+
+  const reminderInterval = setInterval(async () => {
+    if (!member.roles.cache.has(process.env.MEMBER_ROLE_ID) && tempChannel) {
+      await tempChannel.send(
+        `Hey <@${member.user.id}>, just a reminder to complete your verification steps so you can access the rest of the server!`
+      );
+    } else {
+      clearInterval(reminderInterval);
+    }
+  }, 24 * 60 * 60 * 1000); // 24 hours
 
   // Retrieve user emails from Google Sheet
   const emails = await getEmails();
@@ -70,7 +79,7 @@ To access the rest of the server, follow the instructions in the <#${tempChannel
   // Create a "message collector" in the temporary channel so Holly can read the user's messages
   const collector = tempChannel.createMessageCollector({
     filter: filter,
-    time: 604800000, // 7 days
+    time: 10 * 24 * 60 * 60 * 1000, // 7 days
   });
 
   collector.on("collect", async (message: Message) => {
@@ -154,7 +163,7 @@ async function closeVerification(channel: Channel, member: GuildMember) {
   channel.delete();
   if (!member.roles.cache.has(process.env.MEMBER_ROLE_ID))
     member.kick(
-      "You have been a member of the server for one week, and haven't verified your membership yet, so you were kicked automatically. Feel free to rejoin and reverify."
+      "You have been a member of the server for ten days, and haven't verified your membership yet, so you were kicked automatically. Feel free to rejoin using the link in the email!"
     );
 }
 
