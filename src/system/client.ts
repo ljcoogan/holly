@@ -1,6 +1,7 @@
-import { Client, Events, GatewayIntentBits, Interaction } from "discord.js";
+import { Client, Events, type GuildMember, GatewayIntentBits, Interaction } from "discord.js";
 import type { ClientWithCommands } from "../types.js";
 import { deployCommands, readCommands } from "./commands.js";
+import startVerification from "../features/user-validation/verify-user.js";
 import error from "./error.js";
 
 /**
@@ -45,6 +46,9 @@ client.on(Events.InteractionCreate, (interaction: Interaction) => {
     error(`commandHandler: ${e}`);
   }
 });
+
+// When a user joins, start the verification flow
+client.on(Events.GuildMemberAdd, async (member: GuildMember) => startVerification(member));
 
 // Print a short message once our bot has logged in
 client.once(Events.ClientReady, (readyClient: ClientWithCommands) => {
