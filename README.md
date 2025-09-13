@@ -28,12 +28,15 @@ Holly is written in **TypeScript** and runs on the **Node.js** runtime. I run it
     - `COMMITEE_ROLE_ID`, for the ID of the role you want pinged when issues arise. You can get this the same way as the Member role ID.
     - `ERROR_CHANNEL_ID`, for the ID of your error channel (the channel where Holly will post and ping committee if any issues arise). You can get this by right-clicking the channel name in Discord and selecting 'Copy Channel ID'.
     - `WELCOME_CHANNEL_ID`, for the ID of your welcome channel (the channel everyone sees when they join). You can get this the same way as the Welcome channel ID.
+    - `WELCOME_CATEGORY_ID`, for the ID of the category your welcome channel is in. This is so user verification threads are created in this category.
+    - `ROLES_CHANNEL_ID`, for the ID of the channel where users can choose their pronouns.
     - `SIGNUP_SHEET_ID`, for the ID of the spreadsheet that member validation will be pulling data from. You can find this in the URL of your spreadsheet. In the URL "https://docs.google.com/spreadsheets/d/1_QM_XPH2yG8926grT2-pQdV3-cGSGA3bgMaiR7RC5QZ/edit", the spreadsheet ID is "1_QM_XPH2yG8926grT2-pQdV3-cGSGA3bgMaiR7RC5QZ".
     - `SIGNUP_SHEET_RANGE`, for the cells in your signup sheet that you want data pulled from. For example, **ExampleSheet!A:A** will pull all cells in row A of the sheet "ExampleSheet".
 4. Follow [this guide](https://developers.google.com/sheets/api/quickstart/nodejs) until you have a downloaded file called `credentials.json`. Rename this file `google-credentials.json` and store it in the `secrets` directory.
 5. Create another file in the `secrets` directory called `pronouns-roles.json`. Place inside it an array of String containing IDs of pronouns roles in your server (he/him, she/her, etc.). Holly will ensure each member has chosen at least one of these roles before granting them access. How these members get these roles is up to you.
 6. Modify `verify-user.ts` to better suit the verification process of your server. At the very least, you should change the text descriptions to suit your society.
-7. That's it! Run `npm run dev` to start Holly! The bot has started when you see "Ready! Logged in as `x`", where `x` is your bot's Discord account. If you want the bot to run constantly in the background, follow [this guide](https://linuxhandbook.com/create-systemd-services/) to create a Systemd service.
+7. Create a file `secrets/verified-users.json` containing a single empty array, where verified users will be added.
+8. That's it! Run `npm run dev` to start Holly! The bot has started when you see "Ready! Logged in as `x`", where `x` is your bot's Discord account. If you want the bot to run constantly in the background, follow [this guide](https://linuxhandbook.com/create-systemd-services/) to create a Systemd service.
 
 ### Project Directory
 - `dist`, short for **distribution**, contains `JavaScript` files that have been compiled from our `TypeScript` files. These are the files that actually execute when we run Holly. Holly's entrypoint is `dist/index.js`
