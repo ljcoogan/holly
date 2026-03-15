@@ -22,7 +22,7 @@ client.commands = await readCommands();
 await deployCommands(client);
 
 // When a user runs a slash command, process it here
-client.on(Events.InteractionCreate, (interaction: Interaction) => {
+client.on(Events.InteractionCreate, async (interaction: Interaction) => {
   if (!interaction.isChatInputCommand()) return;
   const client: ClientWithCommands = interaction.client;
 
@@ -41,7 +41,7 @@ client.on(Events.InteractionCreate, (interaction: Interaction) => {
   }
 
   try {
-    command.execute(interaction);
+    await command.execute(interaction);
   } catch (e) {
     error(`commandHandler: ${e}`);
   }

@@ -30,9 +30,17 @@ export default {
     }
 
     const targetUser = interaction.options.getUser("user", true);
-    const targetMember = await interaction.guild.members.fetch(targetUser.id);
 
-    await targetMember.roles.remove(process.env.MEMBER_ROLE_ID);
+    let targetMember;
+    try {
+      targetMember = await interaction.guild!.members.fetch(targetUser.id);
+    } catch {
+      // User has left the server — still remove them from verified-users.json below
+    }
+
+    if (targetMember) {
+      await targetMember.roles.remove(process.env.MEMBER_ROLE_ID);
+    }
 
     const verifiedUsers = await getVerifiedUsers();
     const updatedUsers = verifiedUsers.filter(
