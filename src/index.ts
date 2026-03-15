@@ -10,6 +10,8 @@ export default (async () => {
     !process.env.COMMITTEE_ROLE_ID ||
     !process.env.ERROR_CHANNEL_ID ||
     !process.env.WELCOME_CHANNEL_ID ||
+    !process.env.WELCOME_CATEGORY_ID ||
+    !process.env.ROLES_CHANNEL_ID ||
     !process.env.SIGNUP_SHEET_ID ||
     !process.env.SIGNUP_SHEET_RANGE
   ) {
