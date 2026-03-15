@@ -36,7 +36,7 @@ Holly is written in **TypeScript** and runs on the **Node.js** runtime. I run it
 5. Create another file in the `secrets` directory called `pronouns-roles.json`. Place inside it an array of String containing IDs of pronouns roles in your server (he/him, she/her, etc.). Holly will ensure each member has chosen at least one of these roles before granting them access. How these members get these roles is up to you.
 6. Modify `verify-user.ts` to better suit the verification process of your server. At the very least, you should change the text descriptions to suit your society.
 7. Create a file `secrets/verified-users.json` containing a single empty array, where verified users will be added.
-8. That's it! Run `npm run dev` to start Holly! The bot has started when you see "Ready! Logged in as `x`", where `x` is your bot's Discord account. If you want the bot to run constantly in the background, follow [this guide](https://linuxhandbook.com/create-systemd-services/) to create a Systemd service.
+8. That's it! Run `npm run dev` to start Holly! The bot has started when you see "Ready! Logged in as `x`", where `x` is your bot's Discord account. If you want the bot to run constantly in the background, consider using the `holly.service` Systemd service.
 
 ### Project Directory
 - `dist`, short for **distribution**, contains `JavaScript` files that have been compiled from our `TypeScript` files. These are the files that actually execute when we run Holly. Holly's entrypoint is `dist/index.js`
