@@ -1,7 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { authenticate } from "@google-cloud/local-auth";
-import type { OAuth2Client } from "google-auth-library";
 import { google } from "googleapis";
 
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
@@ -17,14 +16,15 @@ const CREDENTIALS_PATH = join(process.cwd(), "secrets/google-credentials.json");
 export async function getEmails(): Promise<string[]> {
   const client = await authorize();
 
-  const sheets = google.sheets({ version: "v4", auth: client });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sheets = google.sheets({ version: "v4", auth: client as any });
 
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SIGNUP_SHEET_ID,
     range: process.env.SIGNUP_SHEET_RANGE,
   });
 
-  if (!res.data.values) throw Error;
+  if (!res.data.values) throw new Error("No data found in Google Sheet");
   const emails = res.data.values.map((value) => {
     return value[0];
   });
@@ -36,14 +36,14 @@ export async function getEmails(): Promise<string[]> {
  * Use secrets/google-token.json and secrets/google-credentials.json to authenticate with Google,
  * so we can read the spreadsheet
  *
- * @returns {OAuth2Client} - Authenticated client for interacting with Google Sheets
+ * @returns Authenticated client for interacting with Google Sheets
  */
-async function authorize(): Promise<OAuth2Client> {
+async function authorize() {
   // Attempt to read credentials from token.json
   try {
-    const credentials = await JSON.parse(readFileSync(TOKEN_PATH).toString());
+    const credentials = JSON.parse(readFileSync(TOKEN_PATH).toString());
     const authCredentials = google.auth.fromJSON(credentials);
-    return authCredentials as OAuth2Client;
+    return authCredentials;
     // If this fails, create new token.json
   } catch (_) {
     const client = await authenticate({
@@ -51,7 +51,7 @@ async function authorize(): Promise<OAuth2Client> {
       keyfilePath: CREDENTIALS_PATH,
     });
 
-    const key = await JSON.parse(readFileSync(CREDENTIALS_PATH).toString()).web;
+    const key = JSON.parse(readFileSync(CREDENTIALS_PATH).toString()).web;
     const payload = JSON.stringify({
       type: "authorized_user",
       client_id: key.client_id,
